@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'dart:developer';
+import '../models/providers/todo_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,9 +11,37 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+TextEditingController titleController = TextEditingController();
+TextEditingController descriptionController = TextEditingController();
+
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    titleController = TextEditingController();
+    descriptionController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  void submit(BuildContext context) {
+    context
+        .watch<TodoModel>()
+        .addTask(titleController.text, descriptionController.text);
+
+    Navigator.pop(context);
+    titleController.clear();
+    descriptionController.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final todoProvider = Provider.of<TodoModel>(context);
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 247, 233, 247),
       backgroundColor: Colors.grey[100],
@@ -30,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: ElevatedButton(
-        onPressed: () {},
+        onPressed: () => _showAlertDialog(context),
         child: const Icon(Icons.add),
       ),
       body: Column(
@@ -90,44 +121,175 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    'Your Tasks',
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      color: Colors.grey,
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        'Your Tasks',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(),
+                        onPressed: () {
+                          todoProvider.removeAll();
+                        },
+                        child: Text(
+                          'clear',
+                          style: GoogleFonts.poppins(color: Colors.deepPurple),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ],
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: ListView.builder(
-                itemCount: 12,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 60,
-                    width: double.maxFinite,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
+          const CustomListView()
         ],
       ),
     );
   }
+
+  // String title = '';
+  // String description = '';
+  // _showAlertDialog(BuildContext context) {
+  //   String title = '';
+  //   String description = '';
+  //   return const AlertDialog();
+  // }
+}
+
+class CustomListView extends StatelessWidget {
+  const CustomListView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<TodoModel>(
+      builder: (context, value, child) => Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: ListView.builder(
+            itemCount: value.items.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              Todo todo = value.items[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  height: 60,
+                  width: double.maxFinite,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          todo.task,
+                          style: GoogleFonts.poppins(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          value.removeTask(todo);
+                        },
+                        child: const Icon(Icons.delete),
+                      ),
+                      const Icon(Icons.arrow_drop_down)
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+_showAlertDialog(BuildContext context) {
+  final taskProvider = Provider.of<TodoModel>(context, listen: false);
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.all(16.0),
+          title: Text(
+            "Create Task",
+            style:
+                GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w500),
+          ),
+          content: ConstrainedBox(
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.35),
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: titleController,
+                  maxLines: 1,
+                  decoration: const InputDecoration(
+                      // hintText: "title",
+                      border: UnderlineInputBorder(),
+                      labelText: 'title'),
+                ),
+                TextFormField(
+                  controller: descriptionController,
+                  maxLines: 1,
+                  decoration: const InputDecoration(
+                      // hintText: "title",
+                      border: UnderlineInputBorder(),
+                      labelText: 'description'),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          taskProvider.addTask(
+                              titleController.text, descriptionController.text);
+                          Navigator.pop(context);
+                          titleController.clear();
+                          descriptionController.clear();
+                        },
+                        child: const Text("Save"))),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // taskProvider.removeTask(Todo(
+                      //     task: titleController.text,
+                      //     description: descriptionController.text));
+                      taskProvider.removeAll();
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Clear"),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      });
 }

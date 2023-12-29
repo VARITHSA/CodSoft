@@ -1,38 +1,39 @@
 import 'dart:collection';
+import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class Todo {
-  String title;
-  String detail;
-  bool isActive;
+  String task;
+  String description;
   Todo({
-    required this.title,
-    required this.detail,
-    this.isActive = false,
+    required this.task,
+    required this.description,
   });
-  void _complete() {
-    isActive != isActive;
-  }
 }
 
-class TodoModelProvider extends ChangeNotifier {
-  List<Todo> alltodo = [];
-  UnmodifiableListView<Todo> get alltasks => UnmodifiableListView(alltodo);
+class TodoModel extends ChangeNotifier {
+  final List<Todo> _item = [];
 
-  void addTask(String title, String detail) {
-    alltodo.add(Todo(title: title, detail: detail));
+  UnmodifiableListView<Todo> get items => UnmodifiableListView(_item);
+
+  void addTask(String task, String description) {
+    _item.add(Todo(task: task, description: description));
+    // print(_item.toString());
+    log('task : $task \n descriptions: $description ');
+    log('${_item.length}');
     notifyListeners();
   }
 
   void removeTask(Todo task) {
-    alltodo.remove(task);
+    _item.remove(task);
+    log('${_item.length}');
     notifyListeners();
   }
 
-  void toggleTask(Todo task) {
-    final taskIndex = alltodo.indexOf(task);
-    alltodo[taskIndex]._complete();
+  void removeAll() {
+    _item.clear();
+    log('${_item.length}');
     notifyListeners();
   }
 }

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_application/src/models/providers/todo_model.dart';
 import 'package:todo_application/src/models/utils/page_routes.dart';
 import 'package:todo_application/src/pages/Onboarding/onboarding_page.dart';
 import 'package:todo_application/src/pages/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => TodoModel(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
