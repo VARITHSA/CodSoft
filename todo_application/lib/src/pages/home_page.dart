@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'dart:developer';
+
 import '../models/providers/todo_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -170,13 +171,19 @@ class _HomePageState extends State<HomePage> {
   // }
 }
 
-class CustomListView extends StatelessWidget {
+class CustomListView extends StatefulWidget {
   const CustomListView({
     super.key,
   });
 
   @override
+  State<CustomListView> createState() => _CustomListViewState();
+}
+
+class _CustomListViewState extends State<CustomListView> {
+  @override
   Widget build(BuildContext context) {
+    bool isActive = false;
     return Consumer<TodoModel>(
       builder: (context, value, child) => Expanded(
         child: Padding(
@@ -185,35 +192,38 @@ class CustomListView extends StatelessWidget {
             itemCount: value.items.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
+              Box box = Hive.box('todoBox');
               Todo todo = value.items[index];
+
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  height: 60,
-                  width: double.maxFinite,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.white,
-                  ),
-                  child: Row(
+                child: Card(
+                  child: ExpansionTile(
+                    expandedAlignment: Alignment.topLeft,
+                    childrenPadding: const EdgeInsets.only(left: 16.0),
+                    title: Text(
+                      todo.task,
+                      style: GoogleFonts.poppins(),
+                    ),
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Text(
-                          todo.task,
-                          style: GoogleFonts.poppins(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            todo.description,
+                            style: GoogleFonts.poppins(fontSize: 16.0),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                value.showDes();
+                              },
+                              child: const Icon(Icons.delete),
+                            ),
+                          )
+                        ],
                       ),
-                      const Spacer(),
-                      InkWell(
-                        onTap: () {
-                          value.removeTask(todo);
-                        },
-                        child: const Icon(Icons.delete),
-                      ),
-                      const Icon(Icons.arrow_drop_down)
                     ],
                   ),
                 ),
@@ -293,3 +303,39 @@ _showAlertDialog(BuildContext context) {
         );
       });
 }
+
+// AnimatedContainer(
+//                   duration: const Duration(milliseconds: 200),
+//                   height: 60,
+//                   width: double.maxFinite,
+//                   decoration: const BoxDecoration(
+//                     borderRadius: BorderRadius.all(Radius.circular(10)),
+//                     color: Colors.white,
+//                   ),
+//                   child: Row(
+//                     children: [
+//                       Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
+//                         child: Text(
+//                           todo.task,
+//                           // box.get('key'),
+//                           style: GoogleFonts.poppins(
+//                               fontSize: 16, fontWeight: FontWeight.w500),
+//                         ),
+//                       ),
+//                       const Spacer(),
+//                       InkWell(
+//                         onTap: () {
+//                           value.removeTask(todo);
+//                         },
+//                         child: const Icon(Icons.delete),
+//                       ),
+//                       InkWell(
+//                         onTap: () {
+//                           value.showDes();
+//                         },
+//                         child: const Icon(Icons.arrow_drop_down),
+//                       )
+//                     ],
+//                   ),
+//                 ),

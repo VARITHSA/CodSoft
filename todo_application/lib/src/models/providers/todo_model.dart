@@ -14,7 +14,6 @@ class Todo {
   @HiveField(1)
   String description;
 
-
   Todo({
     required this.task,
     required this.description,
@@ -23,15 +22,25 @@ class Todo {
 
 class TodoModel extends ChangeNotifier {
   final List<Todo> _item = [];
-
+  Box box = Hive.box('todoBox');
+  bool isActive = false;
   UnmodifiableListView<Todo> get items => UnmodifiableListView(_item);
 
   void addTask(String task, String description) {
     _item.add(Todo(task: task, description: description));
+    box.put('key', Todo(task: task, description: description));
     // print(_item.toString());
     log('task : $task \n descriptions: $description ');
     log('${_item.length}');
     notifyListeners();
+  }
+
+  bool showDes() {
+    isActive = !isActive;
+    log('$isActive');
+    
+    notifyListeners();
+    return isActive;
   }
 
   void removeTask(Todo task) {

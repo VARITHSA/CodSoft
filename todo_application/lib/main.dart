@@ -9,6 +9,8 @@ import 'package:todo_application/src/pages/home_page.dart';
 void main() async {
   //*initialize Hive
   await Hive.initFlutter();
+  // *INITIALIZE ADAPTER
+  Hive.registerAdapter(TodoAdapter());
   await Hive.openBox('todoBox');
   runApp(ChangeNotifierProvider(
     create: (context) => TodoModel(),
