@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     titleController = TextEditingController();
     descriptionController = TextEditingController();
-    _found = _todoList;
+    // _found = _todoList;
     super.initState();
   }
 
@@ -31,28 +31,28 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void searchFilter(String query) {
-    List<Todo> result = [];
-    if (query.isEmpty) {
-      result = _todoList;
-    } else {
-      result = _todoList
-          .where((element) =>
-              element.task.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    }
-    setState(() {
-      _found = result;
-    });
-  }
+  // void searchFilter(String query) {
+  //   List<Todo> result = [];
+  //   if (query.isEmpty) {
+  //     result = _todoList;
+  //   } else {
+  //     result = _todoList
+  //         .where((element) =>
+  //             element.task.toLowerCase().contains(query.toLowerCase()))
+  //         .toList();
+  //   }
+  //   setState(() {
+  //     _found = result;
+  //   });
+  // }
 
   final _controller = TextEditingController();
-  List<Todo> _found = [];
-  final List<Todo> _todoList = TodoModel().items;
+  final List<Todo> _found = [];
+  // final List<Todo> _todoList = TodoNotifier().items;
 
   @override
   Widget build(BuildContext context) {
-    final todoProvider = Provider.of<TodoModel>(context);
+    final todoProvider = Provider.of<TodoNotifier>(context);
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 247, 233, 247),
       backgroundColor: Colors.grey[100],
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0),
                   child: Text(
-                    "${todoProvider.items.length} remaining tasks",
+                    "${todoProvider.boxItems.length} remaining tasks",
                     style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(12.0),
                       child: TextField(
                         controller: _controller,
-                        onChanged: (value) => searchFilter(value),
+                        // onChanged: (value) => searchFilter(value),
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: const Icon(Icons.search),
@@ -159,53 +159,18 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Consumer<TodoModel>(
+          Consumer<TodoNotifier>(
             builder: (context, value, child) => Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: ListView.builder(
-                  itemCount: value.modItem.length,
+                  itemCount: value.boxItems.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    Todo todo = value.modItem[index];
-
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        child: ExpansionTile(
-                          leading: Checkbox(
-                            value: value.items[index].isActive,
-                            onChanged: (_) =>
-                                value.finishTask(value.items[index]),
-                          ),
-                          expandedAlignment: Alignment.topLeft,
-                          childrenPadding: const EdgeInsets.only(left: 16.0),
-                          title: Text(
-                            todo.task,
-                            style: GoogleFonts.poppins(),
-                          ),
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  todo.description,
-                                  style: GoogleFonts.poppins(fontSize: 16.0),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 20.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      value.removeTask(todo);
-                                    },
-                                    child: const Icon(Icons.delete),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                    final Todo todo = value.boxItems.elementAt(index);
+                    return Provider(
+                      create: (context) => (todo, index),
+                      child: const ListWidget(),
                     );
                   },
                 ),
@@ -218,8 +183,65 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+class ListWidget extends StatelessWidget {
+  const ListWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final todo = Provider.of<(Todo, int)>(context);
+    print('Heyd ');
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: ExpansionTile(
+          leading: Selector<TodoNotifier, bool>(
+            selector: (_, c) {
+              return c.boxItems.elementAt(todo.$2).isActive;
+            },
+            builder: (context, state, child) {
+              return Checkbox(
+                  value: state,
+                  onChanged: (v) => context
+                      .read<TodoNotifier>()
+                      .finishTask(todo.$1, todo.$2, v ?? state));
+            },
+          ),
+          expandedAlignment: Alignment.topLeft,
+          childrenPadding: const EdgeInsets.only(left: 16.0),
+          title: Text(
+            todo.$1.task,
+            style: GoogleFonts.poppins(),
+          ),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  todo.$1.description,
+                  style: GoogleFonts.poppins(fontSize: 16.0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      context.read<TodoNotifier>().removeTask(todo.$1);
+                    },
+                    child: const Icon(Icons.delete),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 _showAlertDialog(BuildContext context) {
-  final taskProvider = Provider.of<TodoModel>(context, listen: false);
+  final taskProvider = Provider.of<TodoNotifier>(context, listen: false);
   return showDialog(
       context: context,
       builder: (BuildContext context) {

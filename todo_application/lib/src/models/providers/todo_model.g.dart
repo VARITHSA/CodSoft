@@ -17,19 +17,25 @@ class TodoAdapter extends TypeAdapter<Todo> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Todo(
+      id: fields[2] as String,
       task: fields[0] as String,
       description: fields[1] as String,
+      isActive: fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Todo obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.task)
       ..writeByte(1)
-      ..write(obj.description);
+      ..write(obj.description)
+      ..writeByte(3)
+      ..write(obj.isActive)
+      ..writeByte(2)
+      ..write(obj.id);
   }
 
   @override

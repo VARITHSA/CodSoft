@@ -1,62 +1,87 @@
-import 'dart:collection';
 import 'dart:developer';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
 
 part 'todo_model.g.dart';
 
 @HiveType(typeId: 1)
-class Todo {
+class Todo with EquatableMixin {
   @HiveField(0)
   String task;
 
   @HiveField(1)
   String description;
+  @HiveField(3)
   bool isActive;
+  @HiveField(2)
+  String id;
   Todo({
+    required this.id,
     required this.task,
     required this.description,
     this.isActive = false,
   });
 
-  void iscompleted() {
-    isActive = !isActive;
+  Todo completeTask(bool currentStatus) {
+    return Todo(
+      id: id,
+      task: task,
+      description: description,
+      isActive: currentStatus,
+    );
   }
+
+  @override
+  // TODO: implement props
+
+  List<Object?> get props => [task, description, id, isActive];
 }
 
-class TodoModel extends ChangeNotifier {
-  final List<Todo> _item = [];
-  Box box = Hive.box('todoBox');
+class TodoNotifier extends ChangeNotifier {
+  TodoNotifier() {
+    box = Hive.box<Todo>('todoBox');
+  }
+  late Box<Todo> box;
 
-  UnmodifiableListView<Todo> get items => UnmodifiableListView(_item);
-
-  List<Todo> get modItem => _item;
-  List<Todo> todoList() => _item;
+  List<Todo> get boxItems => box.values.toList();
 
   void addTask(String task, String description) {
-    _item.add(Todo(task: task, description: description));
-    box.put('key', Todo(task: task, description: description));
-    log('task : $task \n descriptions: $description ');
-    log('${_item.length}');
+    final String id = const Uuid().v1();
+    box.add(
+      Todo(
+        task: task,
+        description: description,
+        id: id,
+      ),
+    );
+
     notifyListeners();
   }
 
-  void finishTask(Todo task) {
-    final taskIndex = _item.indexOf(task);
-    _item[taskIndex].iscompleted();
+  void finishTask(Todo task, int index, bool state) {
+    final updateTask = task.completeTask(state);
+
+    log('$updateTask');
+    box.putAt(
+      index,
+      updateTask,
+    );
+    log('$boxItems');
     notifyListeners();
   }
 
   void removeTask(Todo task) {
-    _item.remove(task);
-    log('${_item.length}');
+    box.delete(task.id);
+    log('${boxItems.length}');
     notifyListeners();
   }
 
   void removeAll() {
-    _item.clear();
-    log('${_item.length}');
+    box.clear();
+    log('${boxItems.length}');
     notifyListeners();
   }
 }

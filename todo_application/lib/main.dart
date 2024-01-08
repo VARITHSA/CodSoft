@@ -11,9 +11,9 @@ void main() async {
   await Hive.initFlutter();
   // *INITIALIZE ADAPTER
   Hive.registerAdapter(TodoAdapter());
-  await Hive.openBox('todoBox');
+  await Hive.openBox<Todo>('todoBox');
   runApp(ChangeNotifierProvider(
-    create: (context) => TodoModel(),
+    create: (context) => TodoNotifier(),
     child: const MyApp(),
   ));
 }
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Todo App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
