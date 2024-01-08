@@ -13,34 +13,39 @@ class Todo {
 
   @HiveField(1)
   String description;
-
+  bool isActive;
   Todo({
     required this.task,
     required this.description,
+    this.isActive = false,
   });
+
+  void iscompleted() {
+    isActive = !isActive;
+  }
 }
 
 class TodoModel extends ChangeNotifier {
   final List<Todo> _item = [];
   Box box = Hive.box('todoBox');
-  bool isActive = false;
+
   UnmodifiableListView<Todo> get items => UnmodifiableListView(_item);
+
+  List<Todo> get modItem => _item;
+  List<Todo> todoList() => _item;
 
   void addTask(String task, String description) {
     _item.add(Todo(task: task, description: description));
     box.put('key', Todo(task: task, description: description));
-    // print(_item.toString());
     log('task : $task \n descriptions: $description ');
     log('${_item.length}');
     notifyListeners();
   }
 
-  bool showDes() {
-    isActive = !isActive;
-    log('$isActive');
-    
+  void finishTask(Todo task) {
+    final taskIndex = _item.indexOf(task);
+    _item[taskIndex].iscompleted();
     notifyListeners();
-    return isActive;
   }
 
   void removeTask(Todo task) {

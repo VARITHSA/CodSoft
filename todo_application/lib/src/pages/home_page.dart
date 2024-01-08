@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../models/providers/todo_model.dart';
@@ -20,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     titleController = TextEditingController();
     descriptionController = TextEditingController();
+    _found = _todoList;
     super.initState();
   }
 
@@ -27,18 +27,28 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
+
     super.dispose();
   }
 
-  void submit(BuildContext context) {
-    context
-        .watch<TodoModel>()
-        .addTask(titleController.text, descriptionController.text);
-
-    Navigator.pop(context);
-    titleController.clear();
-    descriptionController.clear();
+  void searchFilter(String query) {
+    List<Todo> result = [];
+    if (query.isEmpty) {
+      result = _todoList;
+    } else {
+      result = _todoList
+          .where((element) =>
+              element.task.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _found = result;
+    });
   }
+
+  final _controller = TextEditingController();
+  List<Todo> _found = [];
+  final List<Todo> _todoList = TodoModel().items;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +75,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () => _showAlertDialog(context),
         child: const Icon(Icons.add),
       ),
+
       body: Column(
         children: [
           SizedBox(
@@ -86,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0),
                   child: Text(
-                    "20 remaining tasks",
+                    "${todoProvider.items.length} remaining tasks",
                     style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
@@ -103,28 +114,20 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Icon(Icons.search),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              "Search your tasks",
-                              style: GoogleFonts.poppins(),
-                            ),
-                          ),
-                          const Spacer(),
-                          const Icon(Icons.expand_more_outlined)
-                        ],
+                      padding: const EdgeInsets.all(12.0),
+                      child: TextField(
+                        controller: _controller,
+                        onChanged: (value) => searchFilter(value),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: const Icon(Icons.search),
+                            iconColor: Colors.deepPurple,
+                            hintText: 'Search your text',
+                            hintStyle: GoogleFonts.poppins()),
                       ),
                     ),
                   ),
                 ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -156,81 +159,60 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          const CustomListView()
-        ],
-      ),
-    );
-  }
+          Consumer<TodoModel>(
+            builder: (context, value, child) => Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: ListView.builder(
+                  itemCount: value.modItem.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    Todo todo = value.modItem[index];
 
-  // String title = '';
-  // String description = '';
-  // _showAlertDialog(BuildContext context) {
-  //   String title = '';
-  //   String description = '';
-  //   return const AlertDialog();
-  // }
-}
-
-class CustomListView extends StatefulWidget {
-  const CustomListView({
-    super.key,
-  });
-
-  @override
-  State<CustomListView> createState() => _CustomListViewState();
-}
-
-class _CustomListViewState extends State<CustomListView> {
-  @override
-  Widget build(BuildContext context) {
-    bool isActive = false;
-    return Consumer<TodoModel>(
-      builder: (context, value, child) => Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: ListView.builder(
-            itemCount: value.items.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              Box box = Hive.box('todoBox');
-              Todo todo = value.items[index];
-
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  child: ExpansionTile(
-                    expandedAlignment: Alignment.topLeft,
-                    childrenPadding: const EdgeInsets.only(left: 16.0),
-                    title: Text(
-                      todo.task,
-                      style: GoogleFonts.poppins(),
-                    ),
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            todo.description,
-                            style: GoogleFonts.poppins(fontSize: 16.0),
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        child: ExpansionTile(
+                          leading: Checkbox(
+                            value: value.items[index].isActive,
+                            onChanged: (_) =>
+                                value.finishTask(value.items[index]),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 20.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                value.showDes();
-                              },
-                              child: const Icon(Icons.delete),
+                          expandedAlignment: Alignment.topLeft,
+                          childrenPadding: const EdgeInsets.only(left: 16.0),
+                          title: Text(
+                            todo.task,
+                            style: GoogleFonts.poppins(),
+                          ),
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  todo.description,
+                                  style: GoogleFonts.poppins(fontSize: 16.0),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      value.removeTask(todo);
+                                    },
+                                    child: const Icon(Icons.delete),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
