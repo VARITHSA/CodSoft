@@ -1,0 +1,205 @@
+{
+    "subjects": [
+      {
+        "subject_name": "Mathematics",
+        "questions": [
+          {
+            "question": "What is the area of a rectangle with length 6 units and width 4 units?",
+            "options": ["12", "16", "20", "24"],
+            "correct_answer": "24"
+          },
+          {
+            "question": "Simplify the expression: 3(x + 2) - 2(4 - x)",
+            "options": ["5x + 2", "x + 14", "5x - 2", "3x - 2"],
+            "correct_answer": "5x + 2"
+          },
+          {
+            "question": "If a triangle has angles measuring 30°, 60°, and 90°, what is the length of the side opposite the 60° angle if the hypotenuse is 10 units?",
+            "options": ["5", "5√3", "10", "10√3"],
+            "correct_answer": "5√3"
+          },
+          {
+            "question": "What is the value of sin(45°)?",
+            "options": ["0", "1", "√2/2", "1/2"],
+            "correct_answer": "√2/2"
+          },
+          {
+            "question": "If a circle has a radius of 5 units, what is its circumference?",
+            "options": ["10π", "15π", "20π", "25π"],
+            "correct_answer": "10π"
+          },
+          {
+            "question": "Find the solution to the inequality: 3x - 7 < 14",
+            "options": ["x < 7", "x > 7", "x < 5", "x > 5"],
+            "correct_answer": "x < 7"
+          },
+          {
+            "question": "What is the sum of the interior angles of a hexagon?",
+            "options": ["120°", "180°", "360°", "720°"],
+            "correct_answer": "720°"
+          },
+          {
+            "question": "If a number is increased by 20% and then decreased by 10%, what is the net percentage change?",
+            "options": ["8%", "10%", "12%", "18%"],
+            "correct_answer": "8%"
+          },
+          {
+            "question": "What is the value of 2^4 × 3^2?",
+            "options": ["48", "144", "192", "288"],
+            "correct_answer": "144"
+          }
+        ]
+      },
+      {
+        "subject_name": "Science",
+        "questions": [
+          {
+            "question": "What is the process by which plants make their own food using sunlight?",
+            "options": ["Respiration", "Photosynthesis", "Fermentation", "Digestion"],
+            "correct_answer": "Photosynthesis"
+          },
+          {
+            "question": "Which gas is responsible for the greenhouse effect on Earth?",
+            "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Methane"],
+            "correct_answer": "Carbon Dioxide"
+          },
+          {
+            "question": "What is the smallest unit of matter?",
+            "options": ["Atom", "Molecule", "Cell", "Particle"],
+            "correct_answer": "Atom"
+          },
+          {
+            "question": "Which organ is responsible for filtering blood and removing waste in the human body?",
+            "options": ["Heart", "Liver", "Kidney", "Lung"],
+            "correct_answer": "Kidney"
+          },
+          {
+            "question": "What is the chemical formula for the ozone layer?",
+            "options": ["O2", "O3", "CO2", "N2"],
+            "correct_answer": "O3"
+          },
+          {
+            "question": "Which scientist is known for the theory of relativity?",
+            "options": ["Isaac Newton", "Galileo Galilei", "Albert Einstein", "Niels Bohr"],
+            "correct_answer": "Albert Einstein"
+          },
+          {
+            "question": "What is the main function of red blood cells in the human body?",
+            "options": ["Transporting Oxygen", "Digesting Food", "Fighting Infections", "Producing Hormones"],
+            "correct_answer": "Transporting Oxygen"
+          },
+          {
+            "question": "What is the largest planet in our solar system?",
+            "options": ["Earth", "Jupiter", "Mars", "Saturn"],
+            "correct_answer": "Jupiter"
+          },
+          {
+            "question": "What is the SI unit of electric current?",
+            "options": ["Volt", "Watt", "Ampere", "Ohm"],
+            "correct_answer": "Ampere"
+          }
+        ]
+      },
+      {
+        "subject_name": "History",
+        "questions": [
+          {
+            "question": "Who was the ancient Egyptian queen known for her relationship with Mark Antony and Julius Caesar?",
+            "options": ["Cleopatra", "Nefertiti", "Hatshepsut", "Isis"],
+            "correct_answer": "Cleopatra"
+          },
+          {
+            "question": "Which ancient civilization built the city of Machu Picchu?",
+            "options": ["Maya", "Inca", "Aztec", "Sumerian"],
+            "correct_answer": "Inca"
+          },
+          {
+            "question": "What event marked the beginning of the Renaissance in Europe?",
+            "options": ["Fall of Constantinople", "Black Death", "Printing Press Invention", "Council of Trent"],
+            "correct_answer": "Fall of Constantinople"
+          },
+          {
+            "question": "Who was the leader of the Indian independence movement and advocated for nonviolent civil disobedience?",
+            "options": ["Jawaharlal Nehru", "Sardar Patel", "Mahatma Gandhi", "Subhas Chandra Bose"],
+            "correct_answer": "Mahatma Gandhi"
+          },
+          {
+            "question": "What was the main cause of the American Civil War?",
+            "options": ["Slavery", "States' Rights", "Economic Differences", "Religious Conflict"],
+            "correct_answer": "Slavery"
+          },
+          {
+            "question": "Which explorer is credited with the first circumnavigation of the Earth?",
+            "options": ["Christopher Columbus", "Ferdinand Magellan", "James Cook", "Vasco da Gama"],
+            "correct_answer": "Ferdinand Magellan"
+          },
+          {
+            "question": "In which year did the Berlin Wall fall, leading to the reunification of Germany?",
+            "options": ["1985", "1989", "1991", "1995"],
+            "correct_answer": "1989"
+          },
+          {
+            "question": "Who was the first female Prime Minister of the United Kingdom?",
+            "options": ["Margaret Thatcher", "Theresa May", "Angela Merkel", "Indira Gandhi"],
+            "correct_answer": "Margaret Thatcher"
+          },
+          {
+            "question": "What was the outcome of the Treaty of Versailles in 1919?",
+            "options": ["Peace and Stability", "Territorial Expansion", "Economic Prosperity", "Harsh Penalties on Germany"],
+            "correct_answer": "Harsh Penalties on Germany"
+          }
+        ]
+      },
+      {
+        "subject_name": "English",
+        "questions": [
+          {
+            "question": "What is the literary term for giving human characteristics to non-human entities?",
+            "options": ["Simile", "Personification", "Metaphor", "Hyperbole"],
+            "correct_answer": "Personification"
+          },
+          {
+            "question": "Who wrote the novel 'Pride and Prejudice'?",
+            "options": ["Charlotte Brontë", "Jane Austen", "Emily Brontë", "Charles Dickens"],
+            "correct_answer": "Jane Austen"
+          },
+          {
+            "question": "What is the meaning of the idiom 'Break a leg'?",
+            "options": ["Good luck", "Take a rest", "Do your best", "Be cautious"],
+            "correct_answer": "Good luck"
+          },
+          {
+            "question": "Identify the figure of speech in the sentence: 'The world is a stage.'",
+            "options": ["Metaphor", "Simile", "Hyperbole", "Personification"],
+            "correct_answer": "Metaphor"
+          },
+          {
+            "question": "Who is the author of the play 'Hamlet'?",
+            "options": ["Christopher Marlowe", "Ben Jonson", "William Shakespeare", "John Milton"],
+            "correct_answer": "William Shakespeare"
+          },
+          {
+            "question": "What is the correct spelling of the word meaning 'a sudden and violent gust of wind'?",
+            "options": ["Breeze", "Gail", "Gale", "Blow"],
+            "correct_answer": "Gale"
+          },
+          {
+            "question": "What is the synonym for 'ephemeral'?",
+            "options": ["Eternal", "Temporary", "Permanent", "Endless"],
+            "correct_answer": "Temporary"
+          },
+          {
+            "question": "What is the opposite of the word 'Cautious'?",
+            "options": ["Wary", "Careful", "Daring", "Prudent"],
+            "correct_answer": "Daring"
+          },
+          {
+            "question": "In literature, what is a protagonist?",
+            "options": ["Main character", "Villain", "Sidekick", "Antagonist"],
+            "correct_answer": "Main character"
+          }
+        ]
+      }
+    ]
+  }
+  
