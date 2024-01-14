@@ -1,0 +1,49 @@
+{
+    "Maths":[
+        {
+            "question": "What is the area of a rectangle with length 6 units and width 4 units?",
+            "options": ["12", "16", "20", "24"],
+            "correct_answer": "24"
+          },
+          {
+            "question": "Simplify the expression: 3(x + 2) - 2(4 - x)",
+            "options": ["5x + 2", "x + 14", "5x - 2", "3x - 2"],
+            "correct_answer": "5x + 2"
+          },
+          {
+            "question": "If a triangle has angles measuring 30°, 60°, and 90°, what is the length of the side opposite the 60° angle if the hypotenuse is 10 units?",
+            "options": ["5", "5√3", "10", "10√3"],
+            "correct_answer": "5√3"
+          },
+          {
+            "question": "What is the value of sin(45°)?",
+            "options": ["0", "1", "√2/2", "1/2"],
+            "correct_answer": "√2/2"
+          },
+          {
+            "question": "If a circle has a radius of 5 units, what is its circumference?",
+            "options": ["10π", "15π", "20π", "25π"],
+            "correct_answer": "10π"
+          },
+          {
+            "question": "Find the solution to the inequality: 3x - 7 < 14",
+            "options": ["x < 7", "x > 7", "x < 5", "x > 5"],
+            "correct_answer": "x < 7"
+          },
+          {
+            "question": "What is the sum of the interior angles of a hexagon?",
+            "options": ["120°", "180°", "360°", "720°"],
+            "correct_answer": "720°"
+          },
+          {
+            "question": "If a number is increased by 20% and then decreased by 10%, what is the net percentage change?",
+            "options": ["8%", "10%", "12%", "18%"],
+            "correct_answer": "8%"
+          },
+          {
+            "question": "What is the value of 2^4 × 3^2?",
+            "options": ["48", "144", "192", "288"],
+            "correct_answer": "144"
+          }
+    ]
+}

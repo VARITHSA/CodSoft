@@ -1,0 +1,49 @@
+{
+    "Science":[
+        {
+            "question": "What is the process by which plants make their own food using sunlight?",
+            "options": ["Respiration", "Photosynthesis", "Fermentation", "Digestion"],
+            "correct_answer": "Photosynthesis"
+          },
+          {
+            "question": "Which gas is responsible for the greenhouse effect on Earth?",
+            "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Methane"],
+            "correct_answer": "Carbon Dioxide"
+          },
+          {
+            "question": "What is the smallest unit of matter?",
+            "options": ["Atom", "Molecule", "Cell", "Particle"],
+            "correct_answer": "Atom"
+          },
+          {
+            "question": "Which organ is responsible for filtering blood and removing waste in the human body?",
+            "options": ["Heart", "Liver", "Kidney", "Lung"],
+            "correct_answer": "Kidney"
+          },
+          {
+            "question": "What is the chemical formula for the ozone layer?",
+            "options": ["O2", "O3", "CO2", "N2"],
+            "correct_answer": "O3"
+          },
+          {
+            "question": "Which scientist is known for the theory of relativity?",
+            "options": ["Isaac Newton", "Galileo Galilei", "Albert Einstein", "Niels Bohr"],
+            "correct_answer": "Albert Einstein"
+          },
+          {
+            "question": "What is the main function of red blood cells in the human body?",
+            "options": ["Transporting Oxygen", "Digesting Food", "Fighting Infections", "Producing Hormones"],
+            "correct_answer": "Transporting Oxygen"
+          },
+          {
+            "question": "What is the largest planet in our solar system?",
+            "options": ["Earth", "Jupiter", "Mars", "Saturn"],
+            "correct_answer": "Jupiter"
+          },
+          {
+            "question": "What is the SI unit of electric current?",
+            "options": ["Volt", "Watt", "Ampere", "Ohm"],
+            "correct_answer": "Ampere"
+          }
+    ]
+}

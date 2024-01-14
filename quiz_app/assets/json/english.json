@@ -1,0 +1,49 @@
+{
+    "English":[
+        {
+            "question": "What is the literary term for giving human characteristics to non-human entities?",
+            "options": ["Simile", "Personification", "Metaphor", "Hyperbole"],
+            "correct_answer": "Personification"
+          },
+          {
+            "question": "Who wrote the novel 'Pride and Prejudice'?",
+            "options": ["Charlotte Brontë", "Jane Austen", "Emily Brontë", "Charles Dickens"],
+            "correct_answer": "Jane Austen"
+          },
+          {
+            "question": "What is the meaning of the idiom 'Break a leg'?",
+            "options": ["Good luck", "Take a rest", "Do your best", "Be cautious"],
+            "correct_answer": "Good luck"
+          },
+          {
+            "question": "Identify the figure of speech in the sentence: 'The world is a stage.'",
+            "options": ["Metaphor", "Simile", "Hyperbole", "Personification"],
+            "correct_answer": "Metaphor"
+          },
+          {
+            "question": "Who is the author of the play 'Hamlet'?",
+            "options": ["Christopher Marlowe", "Ben Jonson", "William Shakespeare", "John Milton"],
+            "correct_answer": "William Shakespeare"
+          },
+          {
+            "question": "What is the correct spelling of the word meaning 'a sudden and violent gust of wind'?",
+            "options": ["Breeze", "Gail", "Gale", "Blow"],
+            "correct_answer": "Gale"
+          },
+          {
+            "question": "What is the synonym for 'ephemeral'?",
+            "options": ["Eternal", "Temporary", "Permanent", "Endless"],
+            "correct_answer": "Temporary"
+          },
+          {
+            "question": "What is the opposite of the word 'Cautious'?",
+            "options": ["Wary", "Careful", "Daring", "Prudent"],
+            "correct_answer": "Daring"
+          },
+          {
+            "question": "In literature, what is a protagonist?",
+            "options": ["Main character", "Villain", "Sidekick", "Antagonist"],
+            "correct_answer": "Main character"
+          }
+    ]
+}

@@ -1,0 +1,49 @@
+{
+    "History":[
+        {
+            "question": "Who was the ancient Egyptian queen known for her relationship with Mark Antony and Julius Caesar?",
+            "options": ["Cleopatra", "Nefertiti", "Hatshepsut", "Isis"],
+            "correct_answer": "Cleopatra"
+          },
+          {
+            "question": "Which ancient civilization built the city of Machu Picchu?",
+            "options": ["Maya", "Inca", "Aztec", "Sumerian"],
+            "correct_answer": "Inca"
+          },
+          {
+            "question": "What event marked the beginning of the Renaissance in Europe?",
+            "options": ["Fall of Constantinople", "Black Death", "Printing Press Invention", "Council of Trent"],
+            "correct_answer": "Fall of Constantinople"
+          },
+          {
+            "question": "Who was the leader of the Indian independence movement and advocated for nonviolent civil disobedience?",
+            "options": ["Jawaharlal Nehru", "Sardar Patel", "Mahatma Gandhi", "Subhas Chandra Bose"],
+            "correct_answer": "Mahatma Gandhi"
+          },
+          {
+            "question": "What was the main cause of the American Civil War?",
+            "options": ["Slavery", "States' Rights", "Economic Differences", "Religious Conflict"],
+            "correct_answer": "Slavery"
+          },
+          {
+            "question": "Which explorer is credited with the first circumnavigation of the Earth?",
+            "options": ["Christopher Columbus", "Ferdinand Magellan", "James Cook", "Vasco da Gama"],
+            "correct_answer": "Ferdinand Magellan"
+          },
+          {
+            "question": "In which year did the Berlin Wall fall, leading to the reunification of Germany?",
+            "options": ["1985", "1989", "1991", "1995"],
+            "correct_answer": "1989"
+          },
+          {
+            "question": "Who was the first female Prime Minister of the United Kingdom?",
+            "options": ["Margaret Thatcher", "Theresa May", "Angela Merkel", "Indira Gandhi"],
+            "correct_answer": "Margaret Thatcher"
+          },
+          {
+            "question": "What was the outcome of the Treaty of Versailles in 1919?",
+            "options": ["Peace and Stability", "Territorial Expansion", "Economic Prosperity", "Harsh Penalties on Germany"],
+            "correct_answer": "Harsh Penalties on Germany"
+          }
+    ]
+}
