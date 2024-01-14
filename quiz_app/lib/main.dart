@@ -6,7 +6,7 @@ import 'package:quiz_app/src/pages/maths_page.dart';
 import 'package:quiz_app/src/pages/science_page.dart';
 import 'package:quiz_app/src/utils/routes.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
