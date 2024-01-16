@@ -71,6 +71,7 @@ class _EnglishPageState extends State<EnglishPage> {
               fillColor: Colours.goldColor,
               ringColor: Colors.black,
               textStyle: GoogleFonts.poppins(color: Colors.white),
+              onComplete: () => _showSubmitDialog(context),
             ),
           )
         ],
