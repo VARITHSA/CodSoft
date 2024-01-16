@@ -29,7 +29,7 @@ class _EnglishPageState extends State<EnglishPage> {
 
   late PageController _pageController;
 
-  late EnglishModel? englishModel;
+  EnglishModel? englishModel;
   @override
   void initState() {
     _pageController = PageController(initialPage: 0);
@@ -43,18 +43,20 @@ class _EnglishPageState extends State<EnglishPage> {
     englishModel = await fetchDataFromJson(filePath);
 
     if (englishModel != null) {
-      // Process the data as needed
-      // For example, update the UI with the fetched data
-      setState(() {
-        // Your UI update code here
-      });
+      setState(() {});
     } else {
       print('Failed to fetch data from the JSON file.');
     }
   }
 
   bool isActive = false;
+  isPressed() {
+    setState(() {
+      isActive = !isActive;
+    });
+  }
 
+  final Color _correctAns = Colors.black;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +74,7 @@ class _EnglishPageState extends State<EnglishPage> {
               ringColor: Colors.black,
               textStyle: GoogleFonts.poppins(color: Colors.white),
               onComplete: () => _showSubmitDialog(context),
+              // onStart: () => _showStartDialog(context),
             ),
           )
         ],
@@ -133,7 +136,12 @@ class _EnglishPageState extends State<EnglishPage> {
                               return GestureDetector(
                                 onTap: () {
                                   log(englishModel!
-                                      .english![0].options![indexs]);
+                                      .english![index].options![indexs]);
+                                  var curr = englishModel!
+                                      .english![index].options![indexs];
+                                  var corr = englishModel!
+                                      .english![index].correctOption;
+                                  curr == corr ? isPressed() : log('FaIl');
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
@@ -142,7 +150,9 @@ class _EnglishPageState extends State<EnglishPage> {
                                     width: double.maxFinite,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
-                                      color: Colors.black,
+                                      color: isActive
+                                          ? Colours.goldColor
+                                          : Colors.black,
                                     ),
                                     child: Row(
                                       children: [
@@ -242,5 +252,33 @@ class _EnglishPageState extends State<EnglishPage> {
                 )),
           );
         });
+  }
+
+  _showStartDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colours.bgColor,
+          title: Text(
+            'Ready to start',
+            style: GoogleFonts.poppins(
+              fontSize: 18,
+              color: Colours.goldColor,
+            ),
+          ),
+          content: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: Colours.goldColor),
+              child: Text(
+                'START',
+                style: GoogleFonts.poppins(fontSize: 18, color: Colors.black),
+              )),
+        );
+      },
+    );
   }
 }
